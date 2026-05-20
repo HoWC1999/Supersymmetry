@@ -285,6 +285,7 @@ eventManager.listen { PostMaterialEvent event ->
         addItem(2808, "edlc_electrode_coated")
         addItem(2809, "edlc_electrode")
         addItem(2810, "component.capacitor.edlc")
+        addItem(2811, "component.photodiode.ir")
 
         // circuit overhaul dies 2950 - 3000
         addItem(2954, "die.diode.alloy")
@@ -610,6 +611,7 @@ eventManager.listen { PostMaterialEvent event ->
         registerCircuitMetaitems("diode.planar", 10, 1, false)
         registerCircuitMetaitems("diode.power", 14, 2, false)
         registerCircuitMetaitems("diode.schottky", 13, 2, false)
+        registerCircuitMetaitems("photodiode", 14, 1, true, true)
 
         addItem(8048, "wafer.diode.alloy.step_two")
         addItem(8049, "wafer.zener_diode.alloy.step_two")
@@ -627,6 +629,14 @@ eventManager.listen { PostMaterialEvent event ->
         addItem(8061, "wafer.diode.schottky.step_eight.deposited")
         addItem(8062, "wafer.diode.power.step_none.exposed")
         addItem(8063, "wafer.diode.schottky.step_eight.exposed")
+
+        // GaAs PIN photodiode litho substates (p-contact at step_three, n-contact at step_six)
+        addItem(8064, "wafer.photodiode.step_three.coated")
+        addItem(8065, "wafer.photodiode.step_three.exposed")
+        addItem(8066, "wafer.photodiode.step_three.deposited")
+        addItem(8067, "wafer.photodiode.step_six.coated")
+        addItem(8068, "wafer.photodiode.step_six.exposed")
+        addItem(8069, "wafer.photodiode.step_six.deposited")
 
         log.infoMC("adding " + toadd_list.size() + " wafer metaitems")
         def start = 8250
@@ -650,6 +660,7 @@ eventManager.listen { PostMaterialEvent event ->
         addItem(8986, "target.tantalum")
         addItem(8987, "target.chromium")
         addItem(8988, "target.tantalum_nitride")
+        addItem(8989, "target.gold_germanium")
 
         //Crops 9000-10000
 
