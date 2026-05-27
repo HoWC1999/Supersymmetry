@@ -1321,6 +1321,8 @@ class ThirdDegreeMaterials {
                 .colorAverage()
                 .build()
 
+        ArFTopcoat.setFormula('(?)(C4H3F9)', true)
+
         ArFBottomAntireflectiveCoating = new Material.Builder(24231, SuSyUtility.susyId('arf_barc'))
                 .liquid()
                 .components(PropyleneGlycolMethylEtherAcetate * 64, AbsorbingMethacrylateCopolymer, TetrapropylammoniumTriflate, Hexamethoxymethylmelamine, NonionicFluorosurfactant)
@@ -1334,6 +1336,7 @@ class ThirdDegreeMaterials {
                 .components(Water, Isoprene, Formaldehyde)
                 .colorAverage()
                 .build()
-        
+
+        DiethylammoniumChlorideSolution = genSolution(24233, 'diethylammonium_chloride_solution', DiethylammoniumChloride, Water, false)
         }
 }
