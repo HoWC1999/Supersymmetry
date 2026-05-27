@@ -677,12 +677,12 @@ eventManager.listen { PostMaterialEvent event ->
         addItem(8089, "wafer.diode.schottky.step_five.exposed")
 
         // GaAs PIN photodiode litho substates (p-contact at step_three, n-contact at step_six)
-        addItem(8064, "wafer.photodiode.step_three.coated")
-        addItem(8065, "wafer.photodiode.step_three.exposed")
-        addItem(8066, "wafer.photodiode.step_three.deposited")
-        addItem(8067, "wafer.photodiode.step_six.coated")
-        addItem(8068, "wafer.photodiode.step_six.exposed")
-        addItem(8069, "wafer.photodiode.step_six.deposited")
+        addItem(8090, "wafer.photodiode.step_three.coated")
+        addItem(8091, "wafer.photodiode.step_three.exposed")
+        addItem(8092, "wafer.photodiode.step_three.deposited")
+        addItem(8093, "wafer.photodiode.step_six.coated")
+        addItem(8094, "wafer.photodiode.step_six.exposed")
+        addItem(8095, "wafer.photodiode.step_six.deposited")
 
         log.infoMC("adding " + toadd_list.size() + " wafer metaitems")
         def start = 8250
