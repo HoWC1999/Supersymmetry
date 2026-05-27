@@ -250,7 +250,7 @@ class Deposition {
         "tungsten": new cvdRecipe(['tungsten_hexafluoride' : 5, 'hydrogen' : 50], ['corrosive_gas' : 50], EV, 100, 10, 0.005), //  LPCVD via WF6 reduction in H2 carrier gas
         "titanium_nitride": new cvdRecipe(['titanium_tetrachloride' : 3, 'ammonia' : 4, 'nitrogen' : 48], ['corrosive_gas' : 60], HV, 80, 12, 0.003), // CVD via TiCl4 and NH3 reaction, with N2 carrier
         "silicon_oxycarbide_hydride": new cvdRecipe(['diethoxymethylsilane' : 5, 'alpha_terpinene' : 5, 'helium' : 50], ['corrosive_gas' : 50], EV, 30, 23, 0.005), // PECVD via OMCTS decomposition in H2 carrier gas.
-        "silicon_oxynitride": new cvdRecipe(['silane': 5, 'ammonia': 10 , 'nitrous_oxide': 5, 'nitrogen': 60], ['waste_gas' : 300], EV, 30, 36, 0.0025) // PECVD via silane, ammonia, and nitrous oxide reaction.
+        "silicon_oxynitride": new cvdRecipe(['silane': 5, 'ammonia': 10 , 'nitrous_oxide': 5, 'nitrogen': 60], ['waste_gas' : 300], EV, 30, 36, 0.0025), // PECVD via silane, ammonia, and nitrous oxide reaction.
         "gallium_arsenide": new cvdRecipe(['trimethyl_gallium' : 5, 'arsine' : 5, 'hydrogen' : 100], ['corrosive_gas' : 150], EV, 40, 14, 0.01), // MOCVD via TMGa and AsH3 in H2 carrier gas
         "aluminium_gallium_arsenide": new cvdRecipe(['trimethyl_gallium' : 3, 'trimethylaluminium' : 2, 'arsine' : 5, 'hydrogen' : 100], ['corrosive_gas' : 165], EV, 40, 14, 0.01), // MOCVD via TMGa, TMAl and AsH3 in H2 carrier gas
         "aluminium_gallium_arsenide.p_doped": new cvdRecipe(['trimethyl_gallium' : 3, 'trimethylaluminium' : 2, 'arsine' : 5, 'carbon_tetrachloride' : 1, 'hydrogen' : 100], ['corrosive_gas' : 170], EV, 50, 14, 0.01) // MOCVD via TMGa, TMAl, AsH3 with CCl4 as carbon p-dopant
