@@ -20,6 +20,7 @@ Etchants used:
 - Titanium: hydrofluoric acid, BCl3 plasma
 - Tungsten: Hydrogen peroxide, CF4 plasma
 - Copper: Iron III chloride or Sodium bisulfite, fluorine plasma
+- BCB: SF6/O2/N2 plasma (approximated here with CF4 plasma)
  */
 
 class Etching {
@@ -108,6 +109,9 @@ class Etching {
         ],
         nickel_silicide: [
             new Etchant("phosphoric_acid", HV, 50, 0.01, false, false)
+        ],
+        benzocyclobutene: [
+            new Etchant("plasma.carbon_tetrafluoride", EV, 10, 0.0167, true, true),
         ]
     ]
 

@@ -22,7 +22,7 @@ class Deposition {
             growthRecipe.fluidInputs(fluid('ultrapure_steam') * 200)
             growthRecipe.fluidOutputs(fluid('hydrogen') * 200)
         }
-        
+
         growthRecipe.buildAndRegister();
     }
 
@@ -44,7 +44,7 @@ class Deposition {
                 .outputs(metaitem(product))
                 .duration(duration)
                 .EUt(VA[this.voltageTier])
-                
+
             if (cleanroom) {evaporationRecipe.cleanroom(CleanroomType.CLEANROOM)}
             evaporationRecipe.buildAndRegister();
         }
@@ -54,6 +54,11 @@ class Deposition {
         new EvaporationSource("aluminium", MV),
         new EvaporationSource("gold_antimony", MV),
         new EvaporationSource("silver", HV),
+        new EvaporationSource("titanium", HV),
+        new EvaporationSource("platinum", EV),
+        new EvaporationSource("gold", MV),
+        new EvaporationSource("nickel", HV),
+        new EvaporationSource("gold_germanium", HV),
     ]
 
     static void generateEvaporationRecipe(String input, String product, int duration, String targetMaterial, boolean cleanroom) {
@@ -61,6 +66,33 @@ class Deposition {
             if (evaporationSource.material == targetMaterial)
                 evaporationSource.generateRecipe(input, product, duration, cleanroom)
         }
+    }
+
+    // feed keys as material paired with duration, for sequential evaporation of multi-layer metal stacks
+    static void generateEvaporationRecipe(String input, String product, Map sourceDurationMap, boolean cleanroom) {
+        int totalDuration = 0
+        int power = 0
+
+        def evaporationRecipe = EVAPORATION.recipeBuilder()
+            .inputs(metaitem(input))
+            .outputs(metaitem(product))
+
+        for (pair in sourceDurationMap) {
+            String material = pair.key
+            int duration = pair.value
+            totalDuration += duration
+
+            def source = evaporationSources.find { it.material == material }
+            if (source == null) {
+                log.infoMC("Material " + material + " not defined as an evaporation source")
+                continue
+            }
+            power = Math.max(power, VA[source.voltageTier])
+            evaporationRecipe.inputs(ore('nugget' + material.split('_').collect { it.capitalize() }.join('')))
+        }
+
+        if (cleanroom) { evaporationRecipe.cleanroom(CleanroomType.CLEANROOM) }
+        evaporationRecipe.duration(totalDuration).EUt(power).buildAndRegister()
     }
 
     /* Sputtering
@@ -72,7 +104,7 @@ class Deposition {
     Ag: 4-8 min
     // Contacts/interconnects
     Al: 10-25 min
-    Cu: 
+    Cu:
     Au:
     W:
     // Target lifetimes
@@ -142,12 +174,12 @@ class Deposition {
             .inputs(metaitem(input))
             .outputs(metaitem(product))
             .cleanroom(CleanroomType.CLEANROOM)
-        
+
         for (pair in targetDurationMap) {
             String material = pair.key
             int duration = pair.value
             totalDuration += duration
-            
+
             def sputteringTarget = sputteringTargets[material]
             if (sputteringTarget == null) {
                 log.infoMC("Material " + material + " not defined as a sputtering target")
@@ -218,7 +250,10 @@ class Deposition {
         "tungsten": new cvdRecipe(['tungsten_hexafluoride' : 5, 'hydrogen' : 50], ['corrosive_gas' : 50], EV, 100, 10, 0.005), //  LPCVD via WF6 reduction in H2 carrier gas
         "titanium_nitride": new cvdRecipe(['titanium_tetrachloride' : 3, 'ammonia' : 4, 'nitrogen' : 48], ['corrosive_gas' : 60], HV, 80, 12, 0.003), // CVD via TiCl4 and NH3 reaction, with N2 carrier
         "silicon_oxycarbide_hydride": new cvdRecipe(['octamethylcyclotetrasiloxane' : 5, 'helium' : 50], ['corrosive_gas' : 50], EV, 30, 23, 0.005), // PECVD via OMCTS decomposition in H2 carrier gas. FIXME: needs terpene porogen
-        "silicon_oxynitride": new cvdRecipe(['silane': 5, 'ammonia': 10 , 'nitrous_oxide': 5, 'nitrogen': 60], ['waste_gas' : 300], EV, 30, 36, 0.0025) // PECVD via silane, ammonia, and nitrous oxide reaction.
+        "silicon_oxynitride": new cvdRecipe(['silane': 5, 'ammonia': 10 , 'nitrous_oxide': 5, 'nitrogen': 60], ['waste_gas' : 300], EV, 30, 36, 0.0025), // PECVD via silane, ammonia, and nitrous oxide reaction.
+        "gallium_arsenide": new cvdRecipe(['trimethyl_gallium' : 5, 'arsine' : 5, 'hydrogen' : 100], ['corrosive_gas' : 150], EV, 40, 14, 0.01), // MOCVD via TMGa and AsH3 in H2 carrier gas
+        "aluminium_gallium_arsenide": new cvdRecipe(['trimethyl_gallium' : 3, 'trimethylaluminium' : 2, 'arsine' : 5, 'hydrogen' : 100], ['corrosive_gas' : 165], EV, 40, 14, 0.01), // MOCVD via TMGa, TMAl and AsH3 in H2 carrier gas
+        "aluminium_gallium_arsenide.p_doped": new cvdRecipe(['trimethyl_gallium' : 3, 'trimethylaluminium' : 2, 'arsine' : 5, 'carbon_tetrachloride' : 1, 'hydrogen' : 100], ['corrosive_gas' : 170], EV, 50, 14, 0.01) // MOCVD via TMGa, TMAl, AsH3 with CCl4 as carbon p-dopant
     ]
 
     static void generateChemicalVaporDepositionRecipe(String input, String product, double thickness, String recipe) {

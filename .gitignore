@@ -43,6 +43,9 @@ config/acronym/saved/
 config/beneath/blockdeco.json
 
 config/betterquesting/DefaultQuests/QuestSettings.json
+config/betterquesting/DefaultQuests/Quests/
+config/betterquesting/DefaultQuests/QuestLines/
+config/betterquesting/resources/
 
 #config/biomesoplenty/biomes/defaults/
 

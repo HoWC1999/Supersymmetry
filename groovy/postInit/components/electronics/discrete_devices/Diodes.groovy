@@ -201,8 +201,72 @@ ASSEMBLER.recipeBuilder()
 
 // Photodiodes
 
+// GaAs PIN photodiode (850 nm near-IR)
+
+oreDict.add('componentPhotodiodeIR', metaitem('component.photodiode.ir'))
+
+// MOCVD epitaxial stack: n-AlGaAs buffer / intrinsic GaAs absorber / p-AlGaAs cap
+Deposition.generateChemicalVaporDepositionRecipe('wafer.gallium_arsenide.n_doped', 'wafer.photodiode.step_one', 1, 'aluminium_gallium_arsenide')
+Deposition.generateChemicalVaporDepositionRecipe('wafer.photodiode.step_one', 'wafer.photodiode.step_two', 1, 'gallium_arsenide')
+Deposition.generateChemicalVaporDepositionRecipe('wafer.photodiode.step_two', 'wafer.photodiode.step_three', 1, 'aluminium_gallium_arsenide.p_doped')
+
+// Anode (p-side) metallization: liftoff e-beam Ti/Pt/Au (~30/50/370 nm)
+Lithography.generatePhotolithographyRecipes('wafer.photodiode.step_three', 'wafer.photodiode.step_four', 'novolac_liftoff_resist', 'mask_set.photodiode', false)
+Deposition.generateEvaporationRecipe('wafer.photodiode.step_three.exposed', 'wafer.photodiode.step_three.deposited', [ 'titanium' : 30, 'platinum' : 50, 'gold' : 370 ], true)
+Lithography.generateResistStrippingRecipes('wafer.photodiode.step_four', 'wafer.photodiode.step_five', 1, false, true)
+
+// Top mesa etch (metal stack acts as hard mask)
+Etching.generateReactiveIonEtchingRecipe('wafer.photodiode.step_five', 'wafer.photodiode.step_six', 'gallium_arsenide', 400)
+
+// Cathode (n-side) metallization: liftoff e-beam AuGe/Ni/Au (~200/50/350 nm)
+Lithography.generatePhotolithographyRecipes('wafer.photodiode.step_six', 'wafer.photodiode.step_seven', 'novolac_liftoff_resist', 'mask_set.photodiode', false)
+Deposition.generateEvaporationRecipe('wafer.photodiode.step_six.exposed', 'wafer.photodiode.step_six.deposited', [ 'gold_germanium' : 200, 'nickel' : 50, 'gold' : 350 ], true)
+Lithography.generateResistStrippingRecipes('wafer.photodiode.step_seven', 'wafer.photodiode.step_eight', 1, false, true)
+
+// Device-isolation mesa to semi-insulating substrate
+Etching.generateReactiveIonEtchingRecipe('wafer.photodiode.step_eight', 'wafer.photodiode.step_nine', 'gallium_arsenide', 400)
+
+// BCB planarization, cure, etch-back
+CURTAIN_COATER.recipeBuilder()
+    .inputs(metaitem('wafer.photodiode.step_nine'))
+    .fluidInputs(fluid('benzocyclobutene') * 200)
+    .outputs(metaitem('wafer.photodiode.step_ten'))
+    .duration(300)
+    .EUt(VA[EV])
+    .cleanroom(CleanroomType.CLEANROOM)
+    .buildAndRegister()
+
+DRYER.recipeBuilder()
+    .inputs(metaitem('wafer.photodiode.step_ten'))
+    .fluidInputs(fluid('nitrogen') * 100)
+    .outputs(metaitem('wafer.photodiode.step_eleven'))
+    .duration(600)
+    .EUt(VA[EV])
+    .cleanroom(CleanroomType.CLEANROOM)
+    .buildAndRegister()
+
+Etching.generateReactiveIonEtchingRecipe('wafer.photodiode.step_eleven', 'wafer.photodiode.step_twelve', 'benzocyclobutene', 200)
+
+// Top S/G waveguide metal (Ti/Au ~100/900 nm) and ohmic sinter
+Deposition.generateEvaporationRecipe('wafer.photodiode.step_twelve', 'wafer.photodiode.step_thirteen', [ 'titanium' : 100, 'gold' : 900 ], true)
+Deposition.generateSinteringRecipe('wafer.photodiode.step_thirteen', 'wafer.photodiode.step_fourteen', 400, EV)
+
+Packaging.generateDicingRecipe('wafer.photodiode.step_fourteen', 'die.photodiode', 16, 400, EV)
+Packaging.generateWireBondingRecipe('die.photodiode', 'die.photodiode.bonded', 'gold', 100, EV)
+
+ASSEMBLER.recipeBuilder()
+    .inputs(metaitem('die.photodiode.bonded'))
+    .inputs(metaitem('component.smd.contact') * 2)
+    .fluidInputs(fluid('epoxy_molding_compound') * 144)
+    .fluidInputs(fluid('high_temperature_solder') * 72)
+    .outputs(metaitem('component.photodiode.ir'))
+    .duration(100)
+    .EUt(VA[EV])
+    .cleanroom(CleanroomType.CLEANROOM)
+    .buildAndRegister();
+
 // Light-emitting diodes
 
     // Infrared
 
-    
+

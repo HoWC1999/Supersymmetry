@@ -4237,5 +4237,13 @@ class OrganicChemistryMaterials {
                 .components(ActivatedCarbon * 4, PolyvinylideneFluoride, Carbon, IsopropylAlcohol * 4)
                 .color(0x2b2b2b)
                 .build()
+
+        Benzocyclobutene = new Material.Builder(15716, SuSyUtility.susyId('benzocyclobutene'))
+                .liquid()
+                .components(Carbon * 24, Hydrogen * 28, Oxygen * 1, Silicon * 2)
+                .color(0xa89060)
+                .build()
+
+        Benzocyclobutene.setFormula('(C8H6CHCH)2Si2O(CH3)4', true)
     }
 }

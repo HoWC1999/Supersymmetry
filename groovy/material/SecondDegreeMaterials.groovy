@@ -808,7 +808,7 @@ class SecondDegreeMaterials {
                 .components(SodiumDithionite, Water)
                 .colorAverage()
                 .build()
-        
+
         SupportedSilver = new Material.Builder(13125, SuSyUtility.susyId('supported_silver'))
                 .dust()
                 .flags(GENERATE_CATALYST_BED)
@@ -842,7 +842,11 @@ class SecondDegreeMaterials {
                 .colorAverage()
                 .build()
 
-        // FREE ID: 13130
+        GoldGermanium = new Material.Builder(13130, SuSyUtility.susyId('gold_germanium'))
+                .ingot().liquid(new FluidBuilder().temperature(634))
+                .components(Gold * 7, Germanium)
+                .colorAverage()
+                .build()
 
         HexachlororhodicAcidSolution = new Material.Builder(13131, SuSyUtility.susyId('hexachlororhodic_acid_solution'))
                 .liquid(new FluidBuilder().attribute(FluidAttributes.ACID))
@@ -1093,7 +1097,7 @@ class SecondDegreeMaterials {
                 .components(MagnesiumNitrate, Water * 2)
                 .colorAverage()
                 .build()
-        
+
         PlatinumOnCarbon = new Material.Builder(13170, SuSyUtility.susyId('platinum_on_carbon'))
                 .dust()
                 .components(Platinum, ActivatedCarbon * 10)
@@ -1116,7 +1120,7 @@ class SecondDegreeMaterials {
                 .liquid()
                 .color(0xd6d1a9)
                 .build()
-        
+
         AmorphousSilicaAlumina = new Material.Builder(13174 , SuSyUtility.susyId('amorphous_silica_alumina'))
                 .dust()
                 .flags(GENERATE_CATALYST_BED)
@@ -1181,7 +1185,7 @@ class SecondDegreeMaterials {
                 .colorAverage()
                 .flags(GENERATE_CATALYST_BED)
                 .build()
-      
+
         // FREE ID: 13185-13186
 
         MetalHydrideMixAnode = new Material.Builder(13187, SuSyUtility.susyId('metal_hydride_mix_anode'))

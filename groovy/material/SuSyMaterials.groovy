@@ -1972,6 +1972,7 @@ class SuSyMaterials {
     public static Material EnameledGrapheneCoatedGold
     public static Material GrapheneCoatedGold
     public static Material GoldAntimony
+    public static Material GoldGermanium
     public static Material MetalHydrideMixAnode
     public static Material SupportedVanadiumPentoxide
 
@@ -2244,6 +2245,7 @@ class SuSyMaterials {
     public static Material Dicyandiamide
     public static Material TwoMethylimidazole
     public static Material EDLCElectrodeSlurry
+    public static Material Benzocyclobutene
     public static Material FlameRetardantEpoxy
     public static Material PropyleneChlorohydrin
     public static Material PropyleneOxide
