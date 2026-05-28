@@ -68,33 +68,6 @@ class Deposition {
         }
     }
 
-    // feed keys as material paired with duration, for sequential evaporation of multi-layer metal stacks
-    static void generateEvaporationRecipe(String input, String product, Map sourceDurationMap, boolean cleanroom) {
-        int totalDuration = 0
-        int power = 0
-
-        def evaporationRecipe = EVAPORATION.recipeBuilder()
-            .inputs(metaitem(input))
-            .outputs(metaitem(product))
-
-        for (pair in sourceDurationMap) {
-            String material = pair.key
-            int duration = pair.value
-            totalDuration += duration
-
-            def source = evaporationSources.find { it.material == material }
-            if (source == null) {
-                log.infoMC("Material " + material + " not defined as an evaporation source")
-                continue
-            }
-            power = Math.max(power, VA[source.voltageTier])
-            evaporationRecipe.inputs(ore('nugget' + material.split('_').collect { it.capitalize() }.join('')))
-        }
-
-        if (cleanroom) { evaporationRecipe.cleanroom(CleanroomType.CLEANROOM) }
-        evaporationRecipe.duration(totalDuration).EUt(power).buildAndRegister()
-    }
-
     /* Sputtering
      Data for important applications
     // Ti-Ni/Pd-Ag metallization for n-doped substrates.
@@ -253,7 +226,7 @@ class Deposition {
         "silicon_oxynitride": new cvdRecipe(['silane': 5, 'ammonia': 10 , 'nitrous_oxide': 5, 'nitrogen': 60], ['waste_gas' : 300], EV, 30, 36, 0.0025), // PECVD via silane, ammonia, and nitrous oxide reaction.
         "gallium_arsenide": new cvdRecipe(['trimethyl_gallium' : 5, 'arsine' : 5, 'hydrogen' : 100], ['corrosive_gas' : 150], EV, 40, 14, 0.01), // MOCVD via TMGa and AsH3 in H2 carrier gas
         "aluminium_gallium_arsenide": new cvdRecipe(['trimethyl_gallium' : 3, 'trimethylaluminium' : 2, 'arsine' : 5, 'hydrogen' : 100], ['corrosive_gas' : 165], EV, 40, 14, 0.01), // MOCVD via TMGa, TMAl and AsH3 in H2 carrier gas
-        "aluminium_gallium_arsenide.p_doped": new cvdRecipe(['trimethyl_gallium' : 3, 'trimethylaluminium' : 2, 'arsine' : 5, 'carbon_tetrachloride' : 1, 'hydrogen' : 100], ['corrosive_gas' : 170], EV, 50, 14, 0.01) // MOCVD via TMGa, TMAl, AsH3 with CCl4 as carbon p-dopant
+        "aluminium_gallium_arsenide.p_doped": new cvdRecipe(['trimethyl_gallium' : 3, 'trimethylaluminium' : 2, 'arsine' : 5, 'carbon_tetrachloride' : 1], ['corrosive_gas' : 170], EV, 50, 14, 0.01) // MOCVD via TMGa, TMAl, AsH3 with CCl4 as carbon p-dopant
     ]
 
     static void generateChemicalVaporDepositionRecipe(String input, String product, double thickness, String recipe) {
