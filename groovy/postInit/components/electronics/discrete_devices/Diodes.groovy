@@ -210,21 +210,17 @@ Deposition.generateChemicalVaporDepositionRecipe('wafer.gallium_arsenide.n_doped
 Deposition.generateChemicalVaporDepositionRecipe('wafer.photodiode.step_one', 'wafer.photodiode.step_two', 1, 'gallium_arsenide')
 Deposition.generateChemicalVaporDepositionRecipe('wafer.photodiode.step_two', 'wafer.photodiode.step_three', 1, 'aluminium_gallium_arsenide.p_doped')
 
-// Anode (p-side) metallization: liftoff e-beam Ti/Pt/Au (~30/50/370 nm)
+// Anode (p-side) metallization: liftoff Ti/Pt/Au (~30/50/370 nm)
 Lithography.generatePhotolithographyRecipes('wafer.photodiode.step_three', 'wafer.photodiode.step_four', 'novolac_liftoff_resist', 'mask_set.photodiode', false)
-Deposition.generateEvaporationRecipe('wafer.photodiode.step_three.exposed', 'wafer.photodiode.step_three.exposed.layer_1', 30, 'titanium', true)
-Deposition.generateEvaporationRecipe('wafer.photodiode.step_three.exposed.layer_1', 'wafer.photodiode.step_three.exposed.layer_2', 50, 'platinum', true)
-Deposition.generateEvaporationRecipe('wafer.photodiode.step_three.exposed.layer_2', 'wafer.photodiode.step_three.deposited', 370, 'gold', true)
+Deposition.generateSputteringRecipe('wafer.photodiode.step_three.exposed', 'wafer.photodiode.step_three.deposited', [ 'titanium' : 30, 'platinum' : 50, 'gold' : 370 ])
 Lithography.generateResistStrippingRecipes('wafer.photodiode.step_four', 'wafer.photodiode.step_five', 1, false, true)
 
 // Top mesa etch (metal stack acts as hard mask)
 Etching.generateReactiveIonEtchingRecipe('wafer.photodiode.step_five', 'wafer.photodiode.step_six', 'gallium_arsenide', 400)
 
-// Cathode (n-side) metallization: liftoff e-beam AuGe/Ni/Au (~200/50/350 nm)
+// Cathode (n-side) metallization: liftoff AuGe/Ni/Au (~200/50/350 nm)
 Lithography.generatePhotolithographyRecipes('wafer.photodiode.step_six', 'wafer.photodiode.step_seven', 'novolac_liftoff_resist', 'mask_set.photodiode', false)
-Deposition.generateEvaporationRecipe('wafer.photodiode.step_six.exposed', 'wafer.photodiode.step_six.exposed.layer_1', 200, 'gold_germanium', true)
-Deposition.generateEvaporationRecipe('wafer.photodiode.step_six.exposed.layer_1', 'wafer.photodiode.step_six.exposed.layer_2', 50, 'nickel', true)
-Deposition.generateEvaporationRecipe('wafer.photodiode.step_six.exposed.layer_2', 'wafer.photodiode.step_six.deposited', 350, 'gold', true)
+Deposition.generateSputteringRecipe('wafer.photodiode.step_six.exposed', 'wafer.photodiode.step_six.deposited', [ 'gold_germanium' : 200, 'nickel' : 50, 'gold' : 350 ])
 Lithography.generateResistStrippingRecipes('wafer.photodiode.step_seven', 'wafer.photodiode.step_eight', 1, false, true)
 
 // Device-isolation mesa to semi-insulating substrate
@@ -252,8 +248,7 @@ DRYER.recipeBuilder()
 Etching.generateReactiveIonEtchingRecipe('wafer.photodiode.step_eleven', 'wafer.photodiode.step_twelve', 'benzocyclobutene', 200)
 
 // Top S/G waveguide metal (Ti/Au ~100/900 nm) and ohmic sinter
-Deposition.generateEvaporationRecipe('wafer.photodiode.step_twelve', 'wafer.photodiode.step_twelve.layer_1', 100, 'titanium', true)
-Deposition.generateEvaporationRecipe('wafer.photodiode.step_twelve.layer_1', 'wafer.photodiode.step_thirteen', 900, 'gold', true)
+Deposition.generateSputteringRecipe('wafer.photodiode.step_twelve', 'wafer.photodiode.step_thirteen', [ 'titanium' : 100, 'gold' : 900 ])
 Deposition.generateSinteringRecipe('wafer.photodiode.step_thirteen', 'wafer.photodiode.step_fourteen', 400, EV)
 
 Packaging.generateDicingRecipe('wafer.photodiode.step_fourteen', 'die.photodiode', 16, 400, EV)

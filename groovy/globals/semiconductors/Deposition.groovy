@@ -54,11 +54,6 @@ class Deposition {
         new EvaporationSource("aluminium", MV),
         new EvaporationSource("gold_antimony", MV),
         new EvaporationSource("silver", HV),
-        new EvaporationSource("titanium", HV),
-        new EvaporationSource("platinum", EV),
-        new EvaporationSource("gold", MV),
-        new EvaporationSource("nickel", HV),
-        new EvaporationSource("gold_germanium", HV),
     ]
 
     static void generateEvaporationRecipe(String input, String product, int duration, String targetMaterial, boolean cleanroom) {
@@ -131,7 +126,8 @@ class Deposition {
         'platinum': new SputteringTarget("platinum", EV, 0.025),
         'tantalum': new SputteringTarget("tantalum", EV, 0.00375),
         'chromium': new SputteringTarget("chromium", MV, 0.01),
-        'tantalum_nitride': new SputteringTarget("tantalum_nitride", EV, 0.0075)
+        'tantalum_nitride': new SputteringTarget("tantalum_nitride", EV, 0.0075),
+        'gold_germanium': new SputteringTarget("gold_germanium", HV, 0.0375)
     ]
 
     static void generateSputteringRecipe(String input, String product, int duration, String targetMaterial) {

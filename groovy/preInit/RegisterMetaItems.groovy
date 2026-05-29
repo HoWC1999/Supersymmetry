@@ -683,12 +683,6 @@ eventManager.listen { PostMaterialEvent event ->
         addItem(8093, "wafer.photodiode.step_six.coated")
         addItem(8094, "wafer.photodiode.step_six.exposed")
         addItem(8095, "wafer.photodiode.step_six.deposited")
-        // Chained-evaporation intermediates for the Ti/Pt/Au, AuGe/Ni/Au and Ti/Au stacks
-        addItem(8096, "wafer.photodiode.step_three.exposed.layer_1")
-        addItem(8097, "wafer.photodiode.step_three.exposed.layer_2")
-        addItem(8098, "wafer.photodiode.step_six.exposed.layer_1")
-        addItem(8099, "wafer.photodiode.step_six.exposed.layer_2")
-        addItem(8100, "wafer.photodiode.step_twelve.layer_1")
 
         log.infoMC("adding " + toadd_list.size() + " wafer metaitems")
         def start = 8250
@@ -713,6 +707,7 @@ eventManager.listen { PostMaterialEvent event ->
         addItem(8986, "target.tantalum")
         addItem(8987, "target.chromium")
         addItem(8988, "target.tantalum_nitride")
+        addItem(8989, "target.gold_germanium")
 
         //Crops 9000-10000
 
